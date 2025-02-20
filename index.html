@@ -8,8 +8,6 @@
     <!-- Leaflet -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
     <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
-    <link rel="stylesheet" href="https://api.mapbox.com/mapbox.js/plugins/leaflet-fullscreen/v1.0.1/leaflet.fullscreen.css" />
-    <script src="https://api.mapbox.com/mapbox.js/plugins/leaflet-fullscreen/v1.0.1/leaflet.fullscreen.min.js"></script>
 
     <style>
         body { margin: 0; font-family: Arial, sans-serif; display: flex; flex-direction: column; align-items: center; height: 100vh; }
@@ -31,46 +29,14 @@
             attribution: '© OpenStreetMap contributors'
         }).addTo(map);
 
-        var rutas = [
-            {
-                "name": "Ruta 1: Centro - Mercado",
-                "color": "blue",
-                "coordinates": [
-                    [25.8797, -97.5046],
-                    [25.8897, -97.5046],
-                    [25.8897, -97.5146]
-                ]
-            },
-            {
-                "name": "Ruta 2: Terminal de Autobuses - Universidad",
-                "color": "green",
-                "coordinates": [
-                    [25.8697, -97.5046],
-                    [25.8797, -97.5146],
-                    [25.8897, -97.5246]
-                ]
-            }
-        ];
+        var rutas = JSON.parse(localStorage.getItem("rutasPeceras")) || [];
 
         rutas.forEach(function (ruta) {
             var polyline = L.polyline(ruta.coordinates, { color: ruta.color, weight: 5 }).addTo(map);
             polyline.bindPopup(ruta.name);
             polyline.on('mouseover', function () { this.openPopup(); });
         });
-
-        L.control.fullscreen({
-            position: 'topright',
-            title: 'Pantalla completa',
-            titleCancel: 'Salir de pantalla completa',
-            content: null,
-            forceSeparateButton: true,
-            forcePseudoFullscreen: true,
-            fullscreenElement: false
-        }).addTo(map);
     </script>
 </body>
 </html>
-
-
-
 
